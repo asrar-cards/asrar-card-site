@@ -364,6 +364,26 @@ function getTextColor(occ, look){
   if(occ.id === 'wedding') return state.photo ? WEDDING_PHOTO_COLOR : WEDDING_NO_PHOTO_COLOR;
   return look.textColor;
 }
+function buildWeddingFullPrompt(fields){
+  const dateLine = fields.date ? `بالتاريخ "${fields.date}"` : '';
+  const venueLine = fields.venue ? ` وفي "${fields.venue}"` : '';
+  const hostLine = fields.host ? `بأسفل البطاقة بخط أصغر: "الداعي: ${fields.host}"` : '';
+  return `صمم دعوة زفاف فاخرة جدًا بنسبة عمودية بأسلوب الدعوات السعودية والخليجية الفاخرة الراقية (مستوى تصاميم 8K احترافية). خلفية سوداء غامقة فخمة بملمس رخامي خفيف، برواز ذهبي معدني مزدوج رفيع يحيط بكل حواف البطاقة، وزخارف عربية ذهبية فاخرة (نقشات هندسية إسلامية كلاسيكية) بالزاوية العلوية والسفلية فقط.
+
+اكتب داخل التصميم بدقة تامة وبأحرف عربية صحيحة ومتصلة هذا المحتوى بالضبط بنفس الترتيب من الأعلى للأسفل:
+1. عنوان كبير جدًا بخط عربي فاخر بأسلوب الخط الديواني الجليّ، حروف ذهبية مذهّبة (gold foil) بزخارف فنية: "دعوة زفاف"
+2. أصغر: "بكل الفخر والاعتزاز ندعوكم لحضور حفل زفاف"
+3. اسم العريس "${fields.groom||'العريس'}" بخط عربي عريض جدًا داخل لوحة (plaque) سوداء بحدود ذهبية مزخرفة بارزة، بحجم كبير وواضح
+4. كلمة "على" بخط بسيط صغير
+5. اسم العروسة "${fields.bride||'العروسة'}" بخط عربي عريض داخل لوحة سوداء بحدود ذهبية مماثلة لخطوة 3
+6. عبارة بخط متوسط: "وذلك بمشيئة الله تعالى"
+7. تفاصيل بثلاثة أيقونات أنيقة صغيرة (ساعة، تاريخ، موقع) بخط ذهبي رفيع تحتها: ${dateLine}${venueLine}
+8. عبارة: "حضوركم شرف لنا ودعوة من القلب"
+${hostLine? '9. '+hostLine : ''}
+10. بأسفل البطاقة خط ديواني ذهبي فاخر مزخرف وواضح للعبارة: "بارك الله لهما وبارك عليهما وجمع بينهما في خير"
+
+التزم بترتيب هرمي واضح (العنوان الأكبر، ثم اسم العريس بحجم بارز، فبقية التفاصيل أصغر تدريجيًا)، لون النص ذهبي معدني فاخر بتأثير مذهّب واضح، تباعد متماثل ومتوازن، زخارف ذهبية فاصلة بسيطة بين الأقسام. لا أخطاء إملائية ولا حروف عربية مشوهة أو منفصلة عن بعضها، التزم بقواعد الكتابة العربية الصحيحة بدقة 100%.`;
+}
 function buildPrompt(occ, fields, look){
   if(occ.id === 'wedding'){
     return `صمم خلفية دعوة زواج رقمية فاخرة بنسبة عمودية بنفس مستوى دعوات الزواج الاحترافية الفعلية بالسعودية والخليج، بدون أي نص إطلاقًا. ${WEDDING_NO_PHOTO_BG}. اترك النصف الأوسط والثلث السفلي من البطاقة فاضي وهادئ تمامًا (خلفية ناعمة فقط بدون زخارف كثيفة) عشان يُكتب عليه نص بعد ذلك. ${STYLE_BASE}`;
@@ -387,7 +407,8 @@ async function generate(){
   setStep(4);
   const occ = OCCASIONS.find(o=>o.id===state.occasion);
   const look = pick(occ.looks);
-  const prompt = state.photo ? buildPhotoPrompt(occ, state.fields, look) : buildPrompt(occ, state.fields, look);
+  const isWeddingNoPhoto = occ.id === 'wedding' && !state.photo;
+  const prompt = isWeddingNoPhoto ? buildWeddingFullPrompt(state.fields) : (state.photo ? buildPhotoPrompt(occ, state.fields, look) : buildPrompt(occ, state.fields, look));
   try{
     const res = await fetch('/.netlify/functions/generate-card', {
       method:'POST',
@@ -396,14 +417,18 @@ async function generate(){
     });
     const data = await res.json();
     if(!res.ok || data.error) throw new Error(data.error || 'فشل التوليد');
-    const extra = occ.extra ? occ.extra(state.fields) : [];
-    const lines = [occ.title(state.fields), occ.line(state.fields), occ.sub(state.fields), ...extra].filter(Boolean);
-    const textColor = getTextColor(occ, look);
-    const fontFamily = occ.id === 'wedding' ? 'Amiri' : null;
-    let anchorRatio = 0.58;
-    if(state.photo && occ.id === 'birthday' && state.fields.age) anchorRatio = 0.88;
-    else if(occ.id === 'wedding') anchorRatio = state.photo ? 0.84 : 0.6;
-    state.generatedImage = await compositeText(data.image, lines, textColor, anchorRatio, fontFamily);
+    if(isWeddingNoPhoto){
+      state.generatedImage = data.image;
+    } else {
+      const extra = occ.extra ? occ.extra(state.fields) : [];
+      const lines = [occ.title(state.fields), occ.line(state.fields), occ.sub(state.fields), ...extra].filter(Boolean);
+      const textColor = getTextColor(occ, look);
+      const fontFamily = occ.id === 'wedding' ? 'Amiri' : null;
+      let anchorRatio = 0.58;
+      if(state.photo && occ.id === 'birthday' && state.fields.age) anchorRatio = 0.88;
+      else if(occ.id === 'wedding') anchorRatio = 0.84;
+      state.generatedImage = await compositeText(data.image, lines, textColor, anchorRatio, fontFamily);
+    }
     state.generationError = null;
   } catch(err){
     state.generationError = err.message || 'تعذّر التوليد، تحقق من الاتصال وحاول مرة ثانية';
