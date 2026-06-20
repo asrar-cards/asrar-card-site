@@ -217,7 +217,7 @@ const OCCASIONS = [
     fields:[{id:'groom', label:'اسم العريس', ph:'مثال: عبدالله'},{id:'bride', label:'اسم العروسة', ph:'مثال: سارة'},{id:'date', label:'تاريخ المناسبة', ph:'مثال: 14 رمضان'},{id:'venue', label:'موقع الحفل (اختياري)', ph:'مثال: قصر العنيقري'},{id:'host', label:'اسم الداعي (اختياري)', ph:'مثال: أحمد بن سالم'}],
     title:f => pick([`${f.groom||'العريس'} و ${f.bride||'العروسة'}`, `حفل زواج ${f.groom||'العريس'} و ${f.bride||'العروسة'}`, `${f.groom||'العريس'} و ${f.bride||'العروسة'} يبدآن مشوارهما معًا`]),
     line:()=> pick(['يسعدنا دعوتكم لمشاركتنا فرحتنا', 'يشرفنا حضوركم لنفرح معكم بهذي اللحظة الغالية', 'تشرفنا مشاركتكم أجمل لحظات حياتنا']), sub:f => f.date||'',
-    extra:f => [f.venue||'', f.host? `الداعي: ${f.host}` : ''].filter(Boolean) },
+    extra:f => [f.venue||'', f.host? `الداعي: ${f.host}` : '', 'بارك الله لهما وبارك عليهما وجمع بينهما في خير'].filter(Boolean) },
   { id:'birthday', label:'عيد ميلاد', icon:'icon-candle',
     looks:[
       {palette:'ذهبي وعنابي دافئ', frame:'برواز سداسي (hexagon) أنيق', motif:'بالونات أنيقة بتصوير واقعي ناعم بزاوية واحدة فقط', textColor:'#F4E3C1'},
@@ -356,10 +356,10 @@ function renderLoading(){
 }
 function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 const STYLE_BASE = 'صمم خلفية بطاقة دعوة فاخرة بنفس مستوى الاحتراف والشكل الفعلي المستخدم حاليًا في تصاميم بطاقات الدعوة بالسعودية والخليج (تصاميم Canva الاحترافية الراقية)، لا تصميم بوستر سوشيال ميديا. الزهور والعناصر الزخرفية يجب تكون بتصوير فوتوغرافي واقعي ناعم (مثل صور الزهور الحقيقية) لا رسوم كرتونية أو فلات إليستريشن. مهم جدًا: لا تكتب أي حروف أو كلمات أو أرقام أو نص إطلاقًا بأي مكان بالتصميم — اترك المنطقة الوسطى والسفلية من البطاقة فاضية تمامًا بدون أي زخرفة كثيفة فيها (فقط خلفية ناعمة)، عشان يُكتب عليها نص بعد ذلك. ضع كل الزخارف (الزهور والأيقونة) بالثلث العلوي فقط أو بزاوية واحدة، واترك باقي البطاقة فاضي وهادئ.';
-const WEDDING_NO_PHOTO_BG = 'خلفية تدرج لوني أخضر زمردي غامق فاخر وناعم، مع زخارف نباتية ذهبية رفيعة (أغصان وأوراق) بزاوية الأعلى وزاوية الأسفل فقط بأسلوب دعوات الزواج الرسمية الفاخرة بالخليج، وخط هندسي ذهبي رفيع جدًا يحيط بحدود البطاقة من الداخل';
+const WEDDING_NO_PHOTO_BG = 'خلفية سوداء غامقة فاخرة جدًا وناعمة، مع يد رجل واقعية بتصوير فوتوغرافي عالي الجودة (بدون إظهار الوجه) بزاوية واحدة من البطاقة فقط (الجانب العلوي الأيمن مثلًا)، ترتدي ساعة فاخرة وخاتم، وكم ثوب أبيض وبشت ذهبي مطرز فاخر، بأسلوب دعوات الزواج الرسمية الفاخرة الحديثة بالخليج';
 const WEDDING_PHOTO_BG = 'خلفية داخلية فاخرة بإضاءة نجف (chandelier) دافئة ذهبية وجدار كلاسيكي فاخر بطراز قصر أو فندق راقٍ';
 const WEDDING_NO_PHOTO_COLOR = '#F4E3C1';
-const WEDDING_PHOTO_COLOR = '#8C6A2F';
+const WEDDING_PHOTO_COLOR = '#F4E3C1';
 function getTextColor(occ, look){
   if(occ.id === 'wedding') return state.photo ? WEDDING_PHOTO_COLOR : WEDDING_NO_PHOTO_COLOR;
   return look.textColor;
@@ -422,9 +422,20 @@ async function compositeText(imageSrc, lines, textColor, anchorRatio, fontFamily
   const canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
   ctx.drawImage(img, 0, 0, W, H);
+  const col = (textColor || '#7A2E3A').replace('#','');
+  const r = parseInt(col.substr(0,2),16), g = parseInt(col.substr(2,2),16), b = parseInt(col.substr(4,2),16);
+  const isLight = (r*299+g*587+b*114)/1000 > 150;
+  const scrim = isLight ? '0,0,0' : '255,255,255';
+  const zoneTop = Math.max(0, H*((anchorRatio||0.58) - 0.32));
+  const grad = ctx.createLinearGradient(0, zoneTop, 0, H);
+  grad.addColorStop(0, `rgba(${scrim},0)`);
+  grad.addColorStop(0.35, `rgba(${scrim},0.55)`);
+  grad.addColorStop(1, `rgba(${scrim},0.85)`);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, zoneTop, W, H - zoneTop);
   ctx.direction = 'rtl'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.fillStyle = textColor || '#7A2E3A';
-  ctx.shadowColor = 'rgba(255,255,255,0.35)'; ctx.shadowBlur = W*0.01;
+  ctx.shadowColor = isLight ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)'; ctx.shadowBlur = W*0.012;
   const cx = W/2;
   const maxWidth = W*0.78;
   function wrap(text, font){
