@@ -22,7 +22,7 @@ export default async (request) => {
       form.append('image', blob, 'photo.png');
       form.append('prompt', prompt);
       form.append('size', apiSize);
-      form.append('quality', 'low');
+      form.append('quality', 'medium');
 
       response = await fetch('https://api.openai.com/v1/images/edits', {
         method: 'POST',
@@ -37,7 +37,7 @@ export default async (request) => {
           Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ model: 'gpt-image-2', prompt, size: apiSize, quality: 'low' })
+        body: JSON.stringify({ model: 'gpt-image-2', prompt, size: apiSize, quality: 'medium' })
       });
     }
 
