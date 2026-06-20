@@ -369,7 +369,9 @@ function buildPhotoPrompt(occ, fields, look){
     return `حوّل هذي الصورة الشخصية إلى دعوة زواج رجالية فاخرة بنسبة عمودية بنفس مستوى دعوات الزواج الاحترافية بالسعودية والخليج. الشخص بالصورة يرتدي ثوب أبيض رسمي وبشت فاخر على الكتف (إذا لم يكن يرتديه بالصورة الأصلية، أضفه عليه بشكل واقعي طبيعي)، يقف بثقة وأناقة بزاوية جانبية أنيقة. ${weddingBg}. ${preserve} اترك مساحة فاضية واضحة بالنصف العلوي والجانب الآخر من البطاقة لكتابة نص بعد ذلك. ${noText}`;
   }
   if(occ.id === 'birthday' && fields.age){
-    return `حوّل هذي الصورة الشخصية لتصميم بوستر عيد ميلاد فاخر بنسبة عمودية. اجعل الرقم "${fields.age}" منحوتًا بعمق واقعي داخل جدار بخلفية ${look.palette} وملمس ناعم فاخر، وبداخل فراغ الرقم زهور وبالونات واقعية بتصوير فوتوغرافي ناعم بألوان متناسقة. ${preserve} اجعل الوجه والكتف ويد وقدم الشخص تمتد خارج حدود الرقم بشكل واقعي ثلاثي الأبعاد، تأثير عمق وظل طبيعي. ${noText}`;
+    const isChild = parseInt(fields.age) > 0 && parseInt(fields.age) <= 12;
+    const styleNote = isChild ? 'بأسلوب طفولي لطيف ومبهج يناسب الأطفال' : 'بأسلوب أنيق وراقي يناسب الكبار، بدون عناصر طفولية كالدبدوب أو القبعات الكرتونية';
+    return `حوّل هذي الصورة الشخصية لتصميم بوستر عيد ميلاد فاخر بنسبة عمودية. اجعل الرقم "${fields.age}" منحوتًا بعمق واقعي داخل جدار بخلفية ${look.palette} وملمس ناعم فاخر، يشغل الرقم أعلى 78% من البطاقة فقط، وبداخل فراغ الرقم زهور وبالونات واقعية بتصوير فوتوغرافي ناعم بألوان متناسقة ${styleNote}. ${preserve} اجعل الوجه والكتف ويد وقدم الشخص تمتد خارج حدود الرقم بشكل واقعي ثلاثي الأبعاد، تأثير عمق وظل طبيعي. مهم جدًا: آخر 22% من أسفل البطاقة يجب يكون استمرار بسيط لنفس خلفية الجدار بدون أي زهور أو بالونات أو ظلال تمتد إليه، فاضي تمامًا ونظيف، ولا تكتب فيه أو بأي مكان آخر أي حروف أو نص إطلاقًا.`;
   }
   return `حوّل هذي الصورة الشخصية إلى بطاقة دعوة رقمية فاخرة بنسبة عمودية (${occ.label}). أدمج الشخص بشكل واقعي واحترافي داخل ${look.frame} من خط ذهبي رفيع، بخلفية بألوان ${look.palette}، مع هذا العنصر بالثلث العلوي أو بزاوية: ${look.motif}. ${preserve} ${noText}`;
 }
@@ -387,7 +389,8 @@ async function generate(){
     const data = await res.json();
     if(!res.ok || data.error) throw new Error(data.error || 'فشل التوليد');
     const lines = [occ.title(state.fields), occ.line(state.fields), occ.sub(state.fields)].filter(Boolean);
-    state.generatedImage = await compositeText(data.image, lines, look.textColor);
+    const anchorRatio = (state.photo && occ.id === 'birthday' && state.fields.age) ? 0.88 : 0.58;
+    state.generatedImage = await compositeText(data.image, lines, look.textColor, anchorRatio);
     state.generationError = null;
   } catch(err){
     state.generationError = err.message || 'تعذّر التوليد، تحقق من الاتصال وحاول مرة ثانية';
@@ -397,7 +400,7 @@ async function generate(){
     setStep(5);
   }
 }
-async function compositeText(imageSrc, lines, textColor){
+async function compositeText(imageSrc, lines, textColor, anchorRatio){
   try{ await document.fonts.load('800 60px Cairo'); await document.fonts.load('500 30px Tajawal'); await document.fonts.ready; }catch(e){}
   const img = await new Promise((resolve,reject)=>{ const im = new Image(); im.onload=()=>resolve(im); im.onerror=reject; im.src = imageSrc; });
   const W = img.naturalWidth || 1024, H = img.naturalHeight || 1536;
@@ -427,7 +430,7 @@ async function compositeText(imageSrc, lines, textColor){
   const blocks = lines.map((t,i)=>({lines:wrap(t, fonts[i]||lineFont), font:fonts[i]||lineFont, gap:i===0?Math.round(W*0.09):Math.round(W*0.06)}));
   let totalH = 0;
   blocks.forEach(b=>{ totalH += b.lines.length * (parseInt(b.font.match(/(\d+)px/)[1])*1.35) + b.gap; });
-  let y = H*0.58 - totalH/2;
+  let y = H*(anchorRatio||0.58) - totalH/2;
   blocks.forEach(b=>{
     ctx.font = b.font;
     const lh = parseInt(b.font.match(/(\d+)px/)[1])*1.35;
