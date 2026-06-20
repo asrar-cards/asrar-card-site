@@ -208,22 +208,52 @@ img{max-width:100%; display:block;}
 
 <script>
 const OCCASIONS = [
-  { id:'wedding', label:'زواج', icon:'icon-ring', motif:'إكليل أو باقة زهور واقعية بتصوير فوتوغرافي ناعم (زهور وردية فاتحة وأوراق خضراء) في الزوايا، مع خاتمين رفيعين متشابكين بتصميم أنيق',
+  { id:'wedding', label:'زواج', icon:'icon-ring',
+    looks:[
+      {palette:'وردي فاتح وبيج دافئ', frame:'برواز قوسي (arch) رفيع من الأعلى', motif:'باقة ورد واقعية بتصوير فوتوغرافي ناعم مع خاتمين رفيعين متشابكين'},
+      {palette:'عنابي فاتح ووردي غامق', frame:'برواز بيضاوي رفيع', motif:'إكليل زهور وردية وأوراق خضراء يحيط بالحواف مع خاتمين أنيقين'},
+      {palette:'كريمي وذهبي فاتح', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'فرع ورد أبيض رفيع بزاوية واحدة مع لمسة ذهبية خفيفة'}
+    ],
     fields:[{id:'groom', label:'اسم العريس', ph:'مثال: عبدالله'},{id:'bride', label:'اسم العروسة', ph:'مثال: سارة'},{id:'date', label:'تاريخ المناسبة', ph:'مثال: 14 رمضان'}],
     title:f => `${f.groom||'العريس'} و ${f.bride||'العروسة'}`, line:()=> 'يسعدنا دعوتكم لمشاركتنا فرحتنا', sub:f => f.date||'' },
-  { id:'birthday', label:'عيد ميلاد', icon:'icon-candle', motif:'بالونات أنيقة بتصوير واقعي ناعم وقصّة كونفيتي خفيفة راقية، بدون ألوان كرتونية صارخة',
+  { id:'birthday', label:'عيد ميلاد', icon:'icon-candle',
+    looks:[
+      {palette:'ذهبي وعنابي دافئ', frame:'برواز سداسي (hexagon) أنيق', motif:'بالونات أنيقة بتصوير واقعي ناعم بزاوية واحدة فقط'},
+      {palette:'كريمي ووردي فاتح', frame:'برواز دائري بيضاوي رفيع', motif:'لمسة كونفيتي راقية خفيفة جدًا بدون ألوان نيون'},
+      {palette:'بيج وأخضر سيج هادئ', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'بالون واحد رفيع بتصوير واقعي مع لمسة ذهبية بسيطة'}
+    ],
     fields:[{id:'name', label:'اسم المحتفى به', ph:'مثال: نورة'},{id:'age', label:'العمر (اختياري)', ph:'مثال: 7 سنوات'}],
     title:f => `كل عام وأنت بخير${f.name? ' يا '+f.name : ''}`, line:f => f.age ? `بمناسبة عامك ال${f.age}` : 'عام جديد مليء بالفرح', sub:()=> '' },
-  { id:'anniversary', label:'عيد زواج', icon:'icon-infinity', motif:'إكليل زهور رفيع وأنيق مع رمز لانهاية (infinity) بخط ذهبي رفيع كعنصر زخرفي راقي واحد',
+  { id:'anniversary', label:'عيد زواج', icon:'icon-infinity',
+    looks:[
+      {palette:'عنابي غامق', frame:'برواز بيضاوي رفيع', motif:'رمز لانهاية (infinity) ذهبي رفيع مع فرع ورد واحد'},
+      {palette:'كحلي غامق قريب من الأسود', frame:'برواز قوسي من الأعلى', motif:'إكليل زهور رفيع جدًا مع رمز لانهاية ذهبي خفيف'},
+      {palette:'وردي غامق وذهبي', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'باقة ورد صغيرة بزاوية واحدة مع خط ذهبي رفيع'}
+    ],
     fields:[{id:'names', label:'الأسماء', ph:'مثال: عبدالله وسارة'},{id:'years', label:'عدد السنوات', ph:'مثال: 5'}],
     title:f => f.names || 'عيد زواج سعيد', line:f => f.years ? `${f.years} سنوات من المحبة` : 'سنوات من المحبة والعطاء', sub:()=> '' },
-  { id:'graduation', label:'تخرج', icon:'icon-cap', motif:'قبعة تخرج بتصوير واقعي أنيق (لا رسمة كرتونية) في الأعلى، مع لمسة زهور خفيفة بالزاوية',
+  { id:'graduation', label:'تخرج', icon:'icon-cap',
+    looks:[
+      {palette:'كحلي غامق وذهبي', frame:'برواز سداسي (hexagon) أنيق', motif:'قبعة تخرج بتصوير واقعي أنيق بأعلى البطاقة'},
+      {palette:'عنابي وذهبي', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'قبعة تخرج واقعية مع لمسة زهور خفيفة بزاوية واحدة'},
+      {palette:'كريمي وكحلي فاتح', frame:'برواز قوسي من الأعلى', motif:'قبعة تخرج بسيطة بتصوير واقعي مع خط ذهبي رفيع تحتها'}
+    ],
     fields:[{id:'name', label:'اسم المتخرج', ph:'مثال: محمد'},{id:'major', label:'التخصص (اختياري)', ph:'مثال: هندسة'}],
     title:f => `تخرج ${f.name||''}`.trim(), line:f => f.major ? `بتخصص ${f.major}` : 'بداية جديدة لمستقبل واعد', sub:()=> '' },
-  { id:'newborn', label:'مولود جديد', icon:'icon-star', motif:'إكليل زهور ناعم بألوان هادئة (بيج وأخضر فاتح) مع نجمة وهلال صغير ذهبي رفيع كلمسة بسيطة',
+  { id:'newborn', label:'مولود جديد', icon:'icon-star',
+    looks:[
+      {palette:'بيج وأخضر فاتح هادئ', frame:'برواز بيضاوي رفيع', motif:'نجمة وهلال صغير ذهبي رفيع مع سحابة لطيفة'},
+      {palette:'كريمي ووردي فاتح جدًا', frame:'برواز قوسي من الأعلى', motif:'إكليل زهور ناعم جدًا بألوان هادئة مع نجمة صغيرة'},
+      {palette:'سماوي فاتح وبيج', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'نجوم صغيرة متناثرة بخفة مع هلال ذهبي رفيع'}
+    ],
     fields:[{id:'name', label:'اسم المولود', ph:'مثال: فهد'},{id:'date', label:'تاريخ الولادة (اختياري)', ph:'مثال: 1447هـ'}],
     title:f => f.name ? `مرحبًا بك ${f.name}` : 'مولود جديد', line:()=> 'أجمل هدية وصلت لهذا البيت', sub:f => f.date||'' },
-  { id:'general', label:'تهنئة عامة', icon:'icon-letter', motif:'لمسة زهور رفيعة وأنيقة بزاوية واحدة فقط، بسيطة وراقية',
+  { id:'general', label:'تهنئة عامة', icon:'icon-letter',
+    looks:[
+      {palette:'كريمي وبيج دافئ', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'لمسة زهور رفيعة بزاوية واحدة فقط'},
+      {palette:'وردي فاتح جدًا', frame:'برواز بيضاوي رفيع', motif:'فرع ورقي بسيط بخط ذهبي رفيع'},
+      {palette:'أبيض وأحمر هادئ خفيف', frame:'برواز قوسي من الأعلى', motif:'خط ذهبي رفيع واحد بدون أي زخرفة إضافية'}
+    ],
     fields:[{id:'text', label:'نص التهنئة', ph:'اكتب رسالتك هنا', area:true}],
     title:f => f.text || 'تهنئة خاصة', line:()=> '', sub:()=> '' }
 ];
@@ -280,14 +310,12 @@ function chooseSize(id){ state.size=id; render(); }
 function renderDetails(){
   const occ = OCCASIONS.find(o=>o.id===state.occasion);
   const fieldsHtml = occ.fields.map(f => `<div class="field"><label for="f_${f.id}">${f.label}</label>${f.area ? `<textarea id="f_${f.id}" placeholder="${f.ph}" oninput="setField('${f.id}', this.value)">${state.fields[f.id]||''}</textarea>` : `<input id="f_${f.id}" type="text" placeholder="${f.ph}" value="${state.fields[f.id]||''}" oninput="setField('${f.id}', this.value)">`}</div>`).join('');
-  const styleChips = STYLES.map(s => `<button class="style-chip ${state.style===s.id?'selected':''}" onclick="chooseStyle('${s.id}')">${s.label}</button>`).join('');
   const photoBlock = state.photo
     ? `<div class="upload-preview"><img src="${state.photo}" alt=""><span class="name">صورتك جاهزة للإضافة بالتصميم</span><button onclick="removePhoto()">إزالة</button></div>`
     : `<div class="upload-zone"><svg><use href="#icon-upload"/></svg><span>أضف صورتك (اختياري)</span><span class="hint">الذكاء الاصطناعي يدمجها داخل التصميم</span><input type="file" accept="image/*" onchange="onPhoto(event)"></div>`;
-  app.innerHTML = `<div class="step">${backRow(2)}<div class="eyebrow">الخطوة الثالثة</div><div class="title">عبّي التفاصيل</div>${fieldsHtml}<div class="field"><label>نمط التصميم</label><div class="style-row">${styleChips}</div></div>${photoBlock}<button class="btn-primary" onclick="generate()">أنشئ التصميم</button></div>`;
+  app.innerHTML = `<div class="step">${backRow(2)}<div class="eyebrow">الخطوة الثالثة</div><div class="title">عبّي التفاصيل</div>${fieldsHtml}${photoBlock}<button class="btn-primary" onclick="generate()">أنشئ التصميم</button></div>`;
 }
 function setField(id,val){ state.fields[id]=val; }
-function chooseStyle(id){ state.style=id; render(); }
 function onPhoto(e){
   const file = e.target.files[0]; if(!file) return;
   const reader = new FileReader();
@@ -320,15 +348,12 @@ function renderLoading(){
     if(el) el.textContent = LOADING_STEPS[i];
   }, 1400);
 }
-const STYLE_DESC = {
-  classic:'خلفية بنسيج رخامي أو ورقي فاتح بدرجات بيج وكريمي ناعمة، مع باقات زهور واقعية بتصوير فوتوغرافي ناعم (وردي فاتح وأوراق خضراء) في الزوايا',
-  luxury:'خلفية لون عنابي غامق سادة وناعم، مع غصون نباتية ذهبية رفيعة (خط ذهبي رفيع لا تعبئة) في الزوايا وزهور واقعية خفيفة بتصوير ناعم',
-  modern:'خلفية فاتحة كريمية أو بيضاء نظيفة، مع لمسة لون أحمر هادئ كخط رفيع واحد فقط، وزهور واقعية ناعمة بزاوية واحدة بسيطة'
-};
-const STYLE_BASE = 'صمم بطاقة دعوة بنفس مستوى الاحتراف والشكل الفعلي المستخدم حاليًا في تصاميم بطاقات الدعوة بالسعودية والخليج (تصاميم Canva الاحترافية الراقية)، لا تصميم بوستر سوشيال ميديا. استخدم برواز هندسي رفيع جدًا من خط ذهبي واحد فقط (مستطيل بزوايا داخلية منحنية، أو شكل قوس/سداسي أنيق) يحيط بحدود البطاقة، بدون أي تعبئة أو زخرفة إضافية بالبرواز نفسه. الزهور والعناصر الزخرفية يجب تكون بتصوير فوتوغرافي واقعي ناعم (مثل صور الزهور الحقيقية) لا رسوم كرتونية أو فلات إليستريشن. الخط العربي يجب يكون أنيق وراقي وواضح بحجم متوسط متناسب (لا ضخم جدًا يغطي البطاقة)، يشبه خطوط بطاقات الدعوة الاحترافية الحقيقية. ممنوع تمامًا: الرسوم الكرتونية الفلات، الكونفيتي والبالونات بألوان نيون صارخة، الخط الضخم العريض جدًا بطريقة بوستر، أي شكل يشبه إعلان سوشيال ميديا بدل بطاقة دعوة راقية.';
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+const STYLE_BASE = 'صمم بطاقة دعوة بنفس مستوى الاحتراف والشكل الفعلي المستخدم حاليًا في تصاميم بطاقات الدعوة بالسعودية والخليج (تصاميم Canva الاحترافية الراقية)، لا تصميم بوستر سوشيال ميديا. الزهور والعناصر الزخرفية يجب تكون بتصوير فوتوغرافي واقعي ناعم (مثل صور الزهور الحقيقية) لا رسوم كرتونية أو فلات إليستريشن. الخط العربي يجب يكون أنيق وراقي وواضح بحجم متوسط متناسب (لا ضخم جدًا يغطي البطاقة)، يشبه خطوط بطاقات الدعوة الاحترافية الحقيقية. ممنوع تمامًا: الرسوم الكرتونية الفلات، الكونفيتي والبالونات بألوان نيون صارخة، الخط الضخم العريض جدًا بطريقة بوستر، أي شكل يشبه إعلان سوشيال ميديا بدل بطاقة دعوة راقية.';
 function buildPrompt(occ, fields, style){
   const lines = [occ.title(fields), occ.line(fields), occ.sub(fields)].filter(Boolean);
-  return `صمم بطاقة دعوة رقمية أنيقة بنسبة عمودية (${occ.label}) بنفس مستوى بطاقات الدعوة الاحترافية الفعلية المستخدمة بالسعودية والخليج. ${STYLE_DESC[style]}. أضف هذا العنصر الخاص بالمناسبة: ${occ.motif}. ${STYLE_BASE} اكتب داخل البطاقة بالعربي بخط أنيق وواضح هذا النص فقط، كل سطر في مكانه المناسب: ${lines.map(l=>`"${l}"`).join('، ثم ')}. لا تضف أي نص إضافي. النتيجة يجب تبدو كبطاقة دعوة حقيقية احترافية جاهزة للمشاركة، لا تصميم بوستر أو كرتوني.`;
+  const look = pick(occ.looks);
+  return `صمم بطاقة دعوة رقمية أنيقة بنسبة عمودية (${occ.label}) بنفس مستوى بطاقات الدعوة الاحترافية الفعلية المستخدمة بالسعودية والخليج. خلفية بألوان ${look.palette}. استخدم ${look.frame} من خط ذهبي رفيع واحد فقط بدون أي تعبئة أو زخرفة إضافية. أضف هذا العنصر الخاص بالمناسبة: ${look.motif}. ${STYLE_BASE} اكتب داخل البطاقة بالعربي بخط أنيق وواضح هذا النص فقط، كل سطر في مكانه المناسب: ${lines.map(l=>`"${l}"`).join('، ثم ')}. لا تضف أي نص إضافي. النتيجة يجب تبدو كبطاقة دعوة حقيقية احترافية جاهزة للمشاركة، لا تصميم بوستر أو كرتوني.`;
 }
 async function generate(){
   setStep(4);
