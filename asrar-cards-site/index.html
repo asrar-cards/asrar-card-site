@@ -6,7 +6,7 @@
 <title>أسرار الرقمية — صمم بطاقتك</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=Tajawal:wght@300;400;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#0A0A0C; --surface:#16161A; --surface-2:#1D1D22;
@@ -214,9 +214,10 @@ const OCCASIONS = [
       {palette:'عنابي فاتح ووردي غامق', frame:'برواز بيضاوي رفيع', motif:'إكليل زهور وردية وأوراق خضراء يحيط بالحواف مع خاتمين أنيقين', textColor:'#F4E3C1'},
       {palette:'كريمي وذهبي فاتح', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'فرع ورد أبيض رفيع بزاوية واحدة مع لمسة ذهبية خفيفة', textColor:'#8C6A2F'}
     ],
-    fields:[{id:'groom', label:'اسم العريس', ph:'مثال: عبدالله'},{id:'bride', label:'اسم العروسة', ph:'مثال: سارة'},{id:'date', label:'تاريخ المناسبة', ph:'مثال: 14 رمضان'}],
+    fields:[{id:'groom', label:'اسم العريس', ph:'مثال: عبدالله'},{id:'bride', label:'اسم العروسة', ph:'مثال: سارة'},{id:'date', label:'تاريخ المناسبة', ph:'مثال: 14 رمضان'},{id:'venue', label:'موقع الحفل (اختياري)', ph:'مثال: قصر العنيقري'},{id:'host', label:'اسم الداعي (اختياري)', ph:'مثال: أحمد بن سالم'}],
     title:f => pick([`${f.groom||'العريس'} و ${f.bride||'العروسة'}`, `حفل زواج ${f.groom||'العريس'} و ${f.bride||'العروسة'}`, `${f.groom||'العريس'} و ${f.bride||'العروسة'} يبدآن مشوارهما معًا`]),
-    line:()=> pick(['يسعدنا دعوتكم لمشاركتنا فرحتنا', 'يشرفنا حضوركم لنفرح معكم بهذي اللحظة الغالية', 'تشرفنا مشاركتكم أجمل لحظات حياتنا']), sub:f => f.date||'' },
+    line:()=> pick(['يسعدنا دعوتكم لمشاركتنا فرحتنا', 'يشرفنا حضوركم لنفرح معكم بهذي اللحظة الغالية', 'تشرفنا مشاركتكم أجمل لحظات حياتنا']), sub:f => f.date||'',
+    extra:f => [f.venue||'', f.host? `الداعي: ${f.host}` : ''].filter(Boolean) },
   { id:'birthday', label:'عيد ميلاد', icon:'icon-candle',
     looks:[
       {palette:'ذهبي وعنابي دافئ', frame:'برواز سداسي (hexagon) أنيق', motif:'بالونات أنيقة بتصوير واقعي ناعم بزاوية واحدة فقط', textColor:'#F4E3C1'},
@@ -355,18 +356,25 @@ function renderLoading(){
 }
 function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 const STYLE_BASE = 'صمم خلفية بطاقة دعوة فاخرة بنفس مستوى الاحتراف والشكل الفعلي المستخدم حاليًا في تصاميم بطاقات الدعوة بالسعودية والخليج (تصاميم Canva الاحترافية الراقية)، لا تصميم بوستر سوشيال ميديا. الزهور والعناصر الزخرفية يجب تكون بتصوير فوتوغرافي واقعي ناعم (مثل صور الزهور الحقيقية) لا رسوم كرتونية أو فلات إليستريشن. مهم جدًا: لا تكتب أي حروف أو كلمات أو أرقام أو نص إطلاقًا بأي مكان بالتصميم — اترك المنطقة الوسطى والسفلية من البطاقة فاضية تمامًا بدون أي زخرفة كثيفة فيها (فقط خلفية ناعمة)، عشان يُكتب عليها نص بعد ذلك. ضع كل الزخارف (الزهور والأيقونة) بالثلث العلوي فقط أو بزاوية واحدة، واترك باقي البطاقة فاضي وهادئ.';
+const WEDDING_NO_PHOTO_BG = 'خلفية تدرج لوني أخضر زمردي غامق فاخر وناعم، مع زخارف نباتية ذهبية رفيعة (أغصان وأوراق) بزاوية الأعلى وزاوية الأسفل فقط بأسلوب دعوات الزواج الرسمية الفاخرة بالخليج، وخط هندسي ذهبي رفيع جدًا يحيط بحدود البطاقة من الداخل';
+const WEDDING_PHOTO_BG = 'خلفية داخلية فاخرة بإضاءة نجف (chandelier) دافئة ذهبية وجدار كلاسيكي فاخر بطراز قصر أو فندق راقٍ';
+const WEDDING_NO_PHOTO_COLOR = '#F4E3C1';
+const WEDDING_PHOTO_COLOR = '#8C6A2F';
+function getTextColor(occ, look){
+  if(occ.id === 'wedding') return state.photo ? WEDDING_PHOTO_COLOR : WEDDING_NO_PHOTO_COLOR;
+  return look.textColor;
+}
 function buildPrompt(occ, fields, look){
+  if(occ.id === 'wedding'){
+    return `صمم خلفية دعوة زواج رقمية فاخرة بنسبة عمودية بنفس مستوى دعوات الزواج الاحترافية الفعلية بالسعودية والخليج، بدون أي نص إطلاقًا. ${WEDDING_NO_PHOTO_BG}. اترك النصف الأوسط والثلث السفلي من البطاقة فاضي وهادئ تمامًا (خلفية ناعمة فقط بدون زخارف كثيفة) عشان يُكتب عليه نص بعد ذلك. ${STYLE_BASE}`;
+  }
   return `صمم خلفية بطاقة دعوة رقمية أنيقة بنسبة عمودية (${occ.label}) بدون أي نص إطلاقًا. خلفية بألوان ${look.palette}. استخدم ${look.frame} من خط ذهبي رفيع واحد فقط بدون أي تعبئة أو زخرفة إضافية. أضف هذا العنصر الخاص بالمناسبة بالثلث العلوي فقط: ${look.motif}. ${STYLE_BASE}`;
 }
 function buildPhotoPrompt(occ, fields, look){
-  const noText = 'مهم جدًا: لا تكتب أي حروف أو كلمات أو أرقام كتابية أو نص إطلاقًا بأي مكان بالتصميم، واترك الثلث السفلي من البطاقة فاضي وهادئ بدون زخرفة كثيفة عشان يُكتب عليه نص بعد ذلك.';
+  const noText = 'مهم جدًا: لا تكتب أي حروف أو كلمات أو أرقام كتابية أو نص إطلاقًا بأي مكان بالتصميم، واترك آخر 25% من أسفل البطاقة استمرار بسيط هادئ لنفس الخلفية بدون أي زخرفة أو ظل يمتد إليه، فاضي تمامًا عشان يُكتب عليه نص بعد ذلك.';
   const preserve = 'حافظ تمامًا على ملامح وجه الشخص بالصورة الأصلية بدون أي تغيير أو تشويه، تصوير فوتوغرافي واقعي عالي الدقة بإضاءة استوديو طبيعية ناعمة.';
   if(occ.id === 'wedding'){
-    const weddingBg = pick([
-      'خلفية داخلية فاخرة بإضاءة نجف (chandelier) دافئة ذهبية وجدار كلاسيكي فاخر',
-      'خلفية تدرج لوني أخضر غامق فاخر بملمس ناعم مع تفاصيل ذهبية خافتة'
-    ]);
-    return `حوّل هذي الصورة الشخصية إلى دعوة زواج رجالية فاخرة بنسبة عمودية بنفس مستوى دعوات الزواج الاحترافية بالسعودية والخليج. الشخص بالصورة يرتدي ثوب أبيض رسمي وبشت فاخر على الكتف (إذا لم يكن يرتديه بالصورة الأصلية، أضفه عليه بشكل واقعي طبيعي)، يقف بثقة وأناقة بزاوية جانبية أنيقة. ${weddingBg}. ${preserve} اترك مساحة فاضية واضحة بالنصف العلوي والجانب الآخر من البطاقة لكتابة نص بعد ذلك. ${noText}`;
+    return `حوّل هذي الصورة الشخصية إلى دعوة زواج رجالية فاخرة بنسبة عمودية بنفس مستوى دعوات الزواج الاحترافية بالسعودية والخليج. الشخص بالصورة يرتدي ثوب أبيض رسمي وبشت فاخر على الكتف (إذا لم يكن يرتديه بالصورة الأصلية، أضفه عليه بشكل واقعي طبيعي)، يقف بثقة وأناقة بزاوية جانبية أنيقة يشغل أعلى 70% من البطاقة فقط. ${WEDDING_PHOTO_BG}. ${preserve} ${noText}`;
   }
   if(occ.id === 'birthday' && fields.age){
     const isChild = parseInt(fields.age) > 0 && parseInt(fields.age) <= 12;
@@ -388,9 +396,14 @@ async function generate(){
     });
     const data = await res.json();
     if(!res.ok || data.error) throw new Error(data.error || 'فشل التوليد');
-    const lines = [occ.title(state.fields), occ.line(state.fields), occ.sub(state.fields)].filter(Boolean);
-    const anchorRatio = (state.photo && occ.id === 'birthday' && state.fields.age) ? 0.88 : 0.58;
-    state.generatedImage = await compositeText(data.image, lines, look.textColor, anchorRatio);
+    const extra = occ.extra ? occ.extra(state.fields) : [];
+    const lines = [occ.title(state.fields), occ.line(state.fields), occ.sub(state.fields), ...extra].filter(Boolean);
+    const textColor = getTextColor(occ, look);
+    const fontFamily = occ.id === 'wedding' ? 'Amiri' : null;
+    let anchorRatio = 0.58;
+    if(state.photo && occ.id === 'birthday' && state.fields.age) anchorRatio = 0.88;
+    else if(occ.id === 'wedding') anchorRatio = state.photo ? 0.84 : 0.6;
+    state.generatedImage = await compositeText(data.image, lines, textColor, anchorRatio, fontFamily);
     state.generationError = null;
   } catch(err){
     state.generationError = err.message || 'تعذّر التوليد، تحقق من الاتصال وحاول مرة ثانية';
@@ -400,8 +413,10 @@ async function generate(){
     setStep(5);
   }
 }
-async function compositeText(imageSrc, lines, textColor, anchorRatio){
-  try{ await document.fonts.load('800 60px Cairo'); await document.fonts.load('500 30px Tajawal'); await document.fonts.ready; }catch(e){}
+async function compositeText(imageSrc, lines, textColor, anchorRatio, fontFamily){
+  const ff = fontFamily || 'Cairo';
+  const ff2 = fontFamily || 'Tajawal';
+  try{ await document.fonts.load(`700 60px ${ff}`); await document.fonts.load(`400 30px ${ff2}`); await document.fonts.ready; }catch(e){}
   const img = await new Promise((resolve,reject)=>{ const im = new Image(); im.onload=()=>resolve(im); im.onerror=reject; im.src = imageSrc; });
   const W = img.naturalWidth || 1024, H = img.naturalHeight || 1536;
   const canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
@@ -423,11 +438,11 @@ async function compositeText(imageSrc, lines, textColor, anchorRatio){
     if(cur) out.push(cur);
     return out;
   }
-  const titleFont = `800 ${Math.round(W*0.072)}px Cairo, sans-serif`;
-  const lineFont = `600 ${Math.round(W*0.038)}px Tajawal, sans-serif`;
-  const subFont = `400 ${Math.round(W*0.032)}px Tajawal, sans-serif`;
+  const titleFont = `700 ${Math.round(W*0.072)}px ${ff}, sans-serif`;
+  const lineFont = `400 ${Math.round(W*0.038)}px ${ff2}, sans-serif`;
+  const subFont = `400 ${Math.round(W*0.032)}px ${ff2}, sans-serif`;
   const fonts = [titleFont, lineFont, subFont];
-  const blocks = lines.map((t,i)=>({lines:wrap(t, fonts[i]||lineFont), font:fonts[i]||lineFont, gap:i===0?Math.round(W*0.09):Math.round(W*0.06)}));
+  const blocks = lines.map((t,i)=>({lines:wrap(t, fonts[i]||subFont), font:fonts[i]||subFont, gap:i===0?Math.round(W*0.09):Math.round(W*0.05)}));
   let totalH = 0;
   blocks.forEach(b=>{ totalH += b.lines.length * (parseInt(b.font.match(/(\d+)px/)[1])*1.35) + b.gap; });
   let y = H*(anchorRatio||0.58) - totalH/2;
