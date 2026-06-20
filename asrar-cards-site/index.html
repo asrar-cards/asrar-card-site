@@ -210,49 +210,49 @@ img{max-width:100%; display:block;}
 const OCCASIONS = [
   { id:'wedding', label:'زواج', icon:'icon-ring',
     looks:[
-      {palette:'وردي فاتح وبيج دافئ', frame:'برواز قوسي (arch) رفيع من الأعلى', motif:'باقة ورد واقعية بتصوير فوتوغرافي ناعم مع خاتمين رفيعين متشابكين'},
-      {palette:'عنابي فاتح ووردي غامق', frame:'برواز بيضاوي رفيع', motif:'إكليل زهور وردية وأوراق خضراء يحيط بالحواف مع خاتمين أنيقين'},
-      {palette:'كريمي وذهبي فاتح', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'فرع ورد أبيض رفيع بزاوية واحدة مع لمسة ذهبية خفيفة'}
+      {palette:'وردي فاتح وبيج دافئ', frame:'برواز قوسي (arch) رفيع من الأعلى', motif:'باقة ورد واقعية بتصوير فوتوغرافي ناعم مع خاتمين رفيعين متشابكين', textColor:'#7A2E3A'},
+      {palette:'عنابي فاتح ووردي غامق', frame:'برواز بيضاوي رفيع', motif:'إكليل زهور وردية وأوراق خضراء يحيط بالحواف مع خاتمين أنيقين', textColor:'#F4E3C1'},
+      {palette:'كريمي وذهبي فاتح', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'فرع ورد أبيض رفيع بزاوية واحدة مع لمسة ذهبية خفيفة', textColor:'#8C6A2F'}
     ],
     fields:[{id:'groom', label:'اسم العريس', ph:'مثال: عبدالله'},{id:'bride', label:'اسم العروسة', ph:'مثال: سارة'},{id:'date', label:'تاريخ المناسبة', ph:'مثال: 14 رمضان'}],
     title:f => `${f.groom||'العريس'} و ${f.bride||'العروسة'}`, line:()=> 'يسعدنا دعوتكم لمشاركتنا فرحتنا', sub:f => f.date||'' },
   { id:'birthday', label:'عيد ميلاد', icon:'icon-candle',
     looks:[
-      {palette:'ذهبي وعنابي دافئ', frame:'برواز سداسي (hexagon) أنيق', motif:'بالونات أنيقة بتصوير واقعي ناعم بزاوية واحدة فقط'},
-      {palette:'كريمي ووردي فاتح', frame:'برواز دائري بيضاوي رفيع', motif:'لمسة كونفيتي راقية خفيفة جدًا بدون ألوان نيون'},
-      {palette:'بيج وأخضر سيج هادئ', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'بالون واحد رفيع بتصوير واقعي مع لمسة ذهبية بسيطة'}
+      {palette:'ذهبي وعنابي دافئ', frame:'برواز سداسي (hexagon) أنيق', motif:'بالونات أنيقة بتصوير واقعي ناعم بزاوية واحدة فقط', textColor:'#F4E3C1'},
+      {palette:'كريمي ووردي فاتح', frame:'برواز دائري بيضاوي رفيع', motif:'لمسة كونفيتي راقية خفيفة جدًا بدون ألوان نيون', textColor:'#7A2E3A'},
+      {palette:'بيج وأخضر سيج هادئ', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'بالون واحد رفيع بتصوير واقعي مع لمسة ذهبية بسيطة', textColor:'#5A6B4A'}
     ],
     fields:[{id:'name', label:'اسم المحتفى به', ph:'مثال: نورة'},{id:'age', label:'العمر (اختياري)', ph:'مثال: 7 سنوات'}],
     title:f => `كل عام وأنت بخير${f.name? ' يا '+f.name : ''}`, line:f => f.age ? `بمناسبة عامك ال${f.age}` : 'عام جديد مليء بالفرح', sub:()=> '' },
   { id:'anniversary', label:'عيد زواج', icon:'icon-infinity',
     looks:[
-      {palette:'عنابي غامق', frame:'برواز بيضاوي رفيع', motif:'رمز لانهاية (infinity) ذهبي رفيع مع فرع ورد واحد'},
-      {palette:'كحلي غامق قريب من الأسود', frame:'برواز قوسي من الأعلى', motif:'إكليل زهور رفيع جدًا مع رمز لانهاية ذهبي خفيف'},
-      {palette:'وردي غامق وذهبي', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'باقة ورد صغيرة بزاوية واحدة مع خط ذهبي رفيع'}
+      {palette:'عنابي غامق', frame:'برواز بيضاوي رفيع', motif:'رمز لانهاية (infinity) ذهبي رفيع مع فرع ورد واحد', textColor:'#F4E3C1'},
+      {palette:'كحلي غامق قريب من الأسود', frame:'برواز قوسي من الأعلى', motif:'إكليل زهور رفيع جدًا مع رمز لانهاية ذهبي خفيف', textColor:'#F4E3C1'},
+      {palette:'وردي غامق وذهبي', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'باقة ورد صغيرة بزاوية واحدة مع خط ذهبي رفيع', textColor:'#F4E3C1'}
     ],
     fields:[{id:'names', label:'الأسماء', ph:'مثال: عبدالله وسارة'},{id:'years', label:'عدد السنوات', ph:'مثال: 5'}],
     title:f => f.names || 'عيد زواج سعيد', line:f => f.years ? `${f.years} سنوات من المحبة` : 'سنوات من المحبة والعطاء', sub:()=> '' },
   { id:'graduation', label:'تخرج', icon:'icon-cap',
     looks:[
-      {palette:'كحلي غامق وذهبي', frame:'برواز سداسي (hexagon) أنيق', motif:'قبعة تخرج بتصوير واقعي أنيق بأعلى البطاقة'},
-      {palette:'عنابي وذهبي', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'قبعة تخرج واقعية مع لمسة زهور خفيفة بزاوية واحدة'},
-      {palette:'كريمي وكحلي فاتح', frame:'برواز قوسي من الأعلى', motif:'قبعة تخرج بسيطة بتصوير واقعي مع خط ذهبي رفيع تحتها'}
+      {palette:'كحلي غامق وذهبي', frame:'برواز سداسي (hexagon) أنيق', motif:'قبعة تخرج بتصوير واقعي أنيق بأعلى البطاقة', textColor:'#F4E3C1'},
+      {palette:'عنابي وذهبي', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'قبعة تخرج واقعية مع لمسة زهور خفيفة بزاوية واحدة', textColor:'#F4E3C1'},
+      {palette:'كريمي وكحلي فاتح', frame:'برواز قوسي من الأعلى', motif:'قبعة تخرج بسيطة بتصوير واقعي مع خط ذهبي رفيع تحتها', textColor:'#2B3A52'}
     ],
     fields:[{id:'name', label:'اسم المتخرج', ph:'مثال: محمد'},{id:'major', label:'التخصص (اختياري)', ph:'مثال: هندسة'}],
     title:f => `تخرج ${f.name||''}`.trim(), line:f => f.major ? `بتخصص ${f.major}` : 'بداية جديدة لمستقبل واعد', sub:()=> '' },
   { id:'newborn', label:'مولود جديد', icon:'icon-star',
     looks:[
-      {palette:'بيج وأخضر فاتح هادئ', frame:'برواز بيضاوي رفيع', motif:'نجمة وهلال صغير ذهبي رفيع مع سحابة لطيفة'},
-      {palette:'كريمي ووردي فاتح جدًا', frame:'برواز قوسي من الأعلى', motif:'إكليل زهور ناعم جدًا بألوان هادئة مع نجمة صغيرة'},
-      {palette:'سماوي فاتح وبيج', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'نجوم صغيرة متناثرة بخفة مع هلال ذهبي رفيع'}
+      {palette:'بيج وأخضر فاتح هادئ', frame:'برواز بيضاوي رفيع', motif:'نجمة وهلال صغير ذهبي رفيع مع سحابة لطيفة', textColor:'#5A6B4A'},
+      {palette:'كريمي ووردي فاتح جدًا', frame:'برواز قوسي من الأعلى', motif:'إكليل زهور ناعم جدًا بألوان هادئة مع نجمة صغيرة', textColor:'#8C6A2F'},
+      {palette:'سماوي فاتح وبيج', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'نجوم صغيرة متناثرة بخفة مع هلال ذهبي رفيع', textColor:'#2B3A52'}
     ],
     fields:[{id:'name', label:'اسم المولود', ph:'مثال: فهد'},{id:'date', label:'تاريخ الولادة (اختياري)', ph:'مثال: 1447هـ'}],
     title:f => f.name ? `مرحبًا بك ${f.name}` : 'مولود جديد', line:()=> 'أجمل هدية وصلت لهذا البيت', sub:f => f.date||'' },
   { id:'general', label:'تهنئة عامة', icon:'icon-letter',
     looks:[
-      {palette:'كريمي وبيج دافئ', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'لمسة زهور رفيعة بزاوية واحدة فقط'},
-      {palette:'وردي فاتح جدًا', frame:'برواز بيضاوي رفيع', motif:'فرع ورقي بسيط بخط ذهبي رفيع'},
-      {palette:'أبيض وأحمر هادئ خفيف', frame:'برواز قوسي من الأعلى', motif:'خط ذهبي رفيع واحد بدون أي زخرفة إضافية'}
+      {palette:'كريمي وبيج دافئ', frame:'برواز مستطيل بزوايا داخلية منحنية', motif:'لمسة زهور رفيعة بزاوية واحدة فقط', textColor:'#8C6A2F'},
+      {palette:'وردي فاتح جدًا', frame:'برواز بيضاوي رفيع', motif:'فرع ورقي بسيط بخط ذهبي رفيع', textColor:'#7A2E3A'},
+      {palette:'أبيض وأحمر هادئ خفيف', frame:'برواز قوسي من الأعلى', motif:'خط ذهبي رفيع واحد بدون أي زخرفة إضافية', textColor:'#9B2F2F'}
     ],
     fields:[{id:'text', label:'نص التهنئة', ph:'اكتب رسالتك هنا', area:true}],
     title:f => f.text || 'تهنئة خاصة', line:()=> '', sub:()=> '' }
@@ -349,16 +349,15 @@ function renderLoading(){
   }, 1400);
 }
 function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-const STYLE_BASE = 'صمم بطاقة دعوة بنفس مستوى الاحتراف والشكل الفعلي المستخدم حاليًا في تصاميم بطاقات الدعوة بالسعودية والخليج (تصاميم Canva الاحترافية الراقية)، لا تصميم بوستر سوشيال ميديا. الزهور والعناصر الزخرفية يجب تكون بتصوير فوتوغرافي واقعي ناعم (مثل صور الزهور الحقيقية) لا رسوم كرتونية أو فلات إليستريشن. الخط العربي يجب يكون أنيق وراقي وواضح بحجم متوسط متناسب (لا ضخم جدًا يغطي البطاقة)، يشبه خطوط بطاقات الدعوة الاحترافية الحقيقية. ممنوع تمامًا: الرسوم الكرتونية الفلات، الكونفيتي والبالونات بألوان نيون صارخة، الخط الضخم العريض جدًا بطريقة بوستر، أي شكل يشبه إعلان سوشيال ميديا بدل بطاقة دعوة راقية.';
-function buildPrompt(occ, fields, style){
-  const lines = [occ.title(fields), occ.line(fields), occ.sub(fields)].filter(Boolean);
-  const look = pick(occ.looks);
-  return `صمم بطاقة دعوة رقمية أنيقة بنسبة عمودية (${occ.label}) بنفس مستوى بطاقات الدعوة الاحترافية الفعلية المستخدمة بالسعودية والخليج. خلفية بألوان ${look.palette}. استخدم ${look.frame} من خط ذهبي رفيع واحد فقط بدون أي تعبئة أو زخرفة إضافية. أضف هذا العنصر الخاص بالمناسبة: ${look.motif}. ${STYLE_BASE} اكتب داخل البطاقة بالعربي بخط أنيق وواضح هذا النص فقط، كل سطر في مكانه المناسب: ${lines.map(l=>`"${l}"`).join('، ثم ')}. لا تضف أي نص إضافي. النتيجة يجب تبدو كبطاقة دعوة حقيقية احترافية جاهزة للمشاركة، لا تصميم بوستر أو كرتوني.`;
+const STYLE_BASE = 'صمم خلفية بطاقة دعوة فاخرة بنفس مستوى الاحتراف والشكل الفعلي المستخدم حاليًا في تصاميم بطاقات الدعوة بالسعودية والخليج (تصاميم Canva الاحترافية الراقية)، لا تصميم بوستر سوشيال ميديا. الزهور والعناصر الزخرفية يجب تكون بتصوير فوتوغرافي واقعي ناعم (مثل صور الزهور الحقيقية) لا رسوم كرتونية أو فلات إليستريشن. مهم جدًا: لا تكتب أي حروف أو كلمات أو أرقام أو نص إطلاقًا بأي مكان بالتصميم — اترك المنطقة الوسطى والسفلية من البطاقة فاضية تمامًا بدون أي زخرفة كثيفة فيها (فقط خلفية ناعمة)، عشان يُكتب عليها نص بعد ذلك. ضع كل الزخارف (الزهور والأيقونة) بالثلث العلوي فقط أو بزاوية واحدة، واترك باقي البطاقة فاضي وهادئ.';
+function buildPrompt(occ, fields, look){
+  return `صمم خلفية بطاقة دعوة رقمية أنيقة بنسبة عمودية (${occ.label}) بدون أي نص إطلاقًا. خلفية بألوان ${look.palette}. استخدم ${look.frame} من خط ذهبي رفيع واحد فقط بدون أي تعبئة أو زخرفة إضافية. أضف هذا العنصر الخاص بالمناسبة بالثلث العلوي فقط: ${look.motif}. ${STYLE_BASE}`;
 }
 async function generate(){
   setStep(4);
   const occ = OCCASIONS.find(o=>o.id===state.occasion);
-  const prompt = buildPrompt(occ, state.fields, state.style);
+  const look = pick(occ.looks);
+  const prompt = buildPrompt(occ, state.fields, look);
   try{
     const res = await fetch('/.netlify/functions/generate-card', {
       method:'POST',
@@ -367,7 +366,8 @@ async function generate(){
     });
     const data = await res.json();
     if(!res.ok || data.error) throw new Error(data.error || 'فشل التوليد');
-    state.generatedImage = data.image;
+    const lines = [occ.title(state.fields), occ.line(state.fields), occ.sub(state.fields)].filter(Boolean);
+    state.generatedImage = await compositeText(data.image, lines, look.textColor);
     state.generationError = null;
   } catch(err){
     state.generationError = err.message || 'تعذّر التوليد، تحقق من الاتصال وحاول مرة ثانية';
@@ -376,6 +376,45 @@ async function generate(){
     clearInterval(state.loadingInterval);
     setStep(5);
   }
+}
+async function compositeText(imageSrc, lines, textColor){
+  try{ await document.fonts.load('800 60px Cairo'); await document.fonts.load('500 30px Tajawal'); await document.fonts.ready; }catch(e){}
+  const img = await new Promise((resolve,reject)=>{ const im = new Image(); im.onload=()=>resolve(im); im.onerror=reject; im.src = imageSrc; });
+  const W = img.naturalWidth || 1024, H = img.naturalHeight || 1536;
+  const canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, W, H);
+  ctx.direction = 'rtl'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = textColor || '#7A2E3A';
+  ctx.shadowColor = 'rgba(255,255,255,0.35)'; ctx.shadowBlur = W*0.01;
+  const cx = W/2;
+  const maxWidth = W*0.78;
+  function wrap(text, font){
+    ctx.font = font;
+    const words = text.split(' ');
+    const out = []; let cur = '';
+    for(const w of words){
+      const test = cur ? cur+' '+w : w;
+      if(ctx.measureText(test).width > maxWidth && cur){ out.push(cur); cur = w; } else cur = test;
+    }
+    if(cur) out.push(cur);
+    return out;
+  }
+  const titleFont = `800 ${Math.round(W*0.072)}px Cairo, sans-serif`;
+  const lineFont = `600 ${Math.round(W*0.038)}px Tajawal, sans-serif`;
+  const subFont = `400 ${Math.round(W*0.032)}px Tajawal, sans-serif`;
+  const fonts = [titleFont, lineFont, subFont];
+  const blocks = lines.map((t,i)=>({lines:wrap(t, fonts[i]||lineFont), font:fonts[i]||lineFont, gap:i===0?Math.round(W*0.09):Math.round(W*0.06)}));
+  let totalH = 0;
+  blocks.forEach(b=>{ totalH += b.lines.length * (parseInt(b.font.match(/(\d+)px/)[1])*1.35) + b.gap; });
+  let y = H*0.58 - totalH/2;
+  blocks.forEach(b=>{
+    ctx.font = b.font;
+    const lh = parseInt(b.font.match(/(\d+)px/)[1])*1.35;
+    b.lines.forEach(ln=>{ y += lh; ctx.fillText(ln, cx, y); });
+    y += b.gap;
+  });
+  return canvas.toDataURL('image/png');
 }
 
 function renderResult(){
