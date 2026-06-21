@@ -9,10 +9,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=Tajawal:wght@300;400;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#0A0A0C; --surface:#16161A; --surface-2:#1D1D22;
+  --ink:#FAF8F6; --surface:#FFFFFF; --surface-2:#F2EFEA;
   --red:#EA2A33; --red-glow:#FF5158; --tech-blue:#3FD1E0;
-  --gold:#C9A227; --gold-light:#E6CC74; --white:#F5F4F2; --muted:#8C8B92;
-  --line:rgba(255,255,255,0.09); --line-red:rgba(234,42,51,0.4);
+  --gold:#C9A227; --gold-light:#9C7C1E; --white:#1A191C; --muted:#6E6D73;
+  --line:rgba(20,18,15,0.10); --line-red:rgba(234,42,51,0.3);
   --font-display:'Cairo', sans-serif; --font-body:'Tajawal', sans-serif;
 }
 *{box-sizing:border-box; margin:0; padding:0;}
@@ -31,7 +31,7 @@ img{max-width:100%; display:block;}
 .brand h1{font-family:var(--font-display); font-weight:900; font-size:19px; color:var(--white); letter-spacing:.2px;}
 
 .progress{display:flex; justify-content:center; gap:8px; margin:14px 0 22px; position:relative; z-index:1;}
-.progress .dot{width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.12); transition:background .3s, transform .3s;}
+.progress .dot{width:8px; height:8px; border-radius:50%; background:rgba(20,18,15,0.14); transition:background .3s, transform .3s;}
 .progress .dot.active{background:var(--red); transform:scale(1.25); box-shadow:0 0 8px var(--red);}
 .progress .dot.done{background:var(--red-glow);}
 
@@ -43,9 +43,9 @@ img{max-width:100%; display:block;}
 .title{font-family:var(--font-display); font-weight:800; font-size:23px; color:var(--white); line-height:1.4; margin-bottom:10px;}
 .subtitle{font-size:14px; color:var(--muted); line-height:1.7; margin-bottom:22px;}
 
-.scan-box{width:128px; height:160px; margin:6px auto 24px; position:relative; overflow:hidden; border:1.5px solid rgba(255,255,255,0.14); border-radius:14px; background:linear-gradient(160deg, var(--surface-2), var(--surface));}
+.scan-box{width:128px; height:160px; margin:6px auto 24px; position:relative; overflow:hidden; border:1.5px solid rgba(20,18,15,0.12); border-radius:14px; background:linear-gradient(160deg, var(--surface-2), var(--surface)); box-shadow:0 8px 22px -8px rgba(20,18,15,0.15);}
 .scan-box.lg{width:150px; height:190px;}
-.scan-box::before{content:""; position:absolute; inset:13px; border:1px dashed rgba(255,255,255,0.12); border-radius:8px;}
+.scan-box::before{content:""; position:absolute; inset:13px; border:1px dashed rgba(20,18,15,0.14); border-radius:8px;}
 .scan-box .scan-line{position:absolute; left:0; right:0; height:2px; top:10%; background:linear-gradient(90deg, transparent, var(--red), var(--tech-blue), transparent); box-shadow:0 0 14px var(--red); animation:scanMove 2.3s ease-in-out infinite;}
 @keyframes scanMove{0%{top:8%;} 50%{top:86%;} 100%{top:8%;}}
 .scan-box .ai-tag{position:absolute; top:8px; right:8px; background:var(--red); color:#fff; font-size:9.5px; font-weight:800; padding:2px 7px; border-radius:6px; letter-spacing:.3px;}
@@ -154,30 +154,30 @@ img{max-width:100%; display:block;}
 .particle{position:absolute; bottom:0; border-radius:50%; background:var(--red-glow); box-shadow:0 0 10px var(--red-glow); opacity:0; animation:floatUp 3.2s ease-in infinite;}
 @keyframes floatUp{0%{opacity:0; transform:translateY(0);} 12%{opacity:.9;} 100%{opacity:0; transform:translateY(-420px);}}
 
-.offer-card{position:relative; width:100%; max-width:360px; max-height:88vh; overflow-y:auto; background:linear-gradient(165deg, var(--surface-2), var(--ink)); border:1.5px solid var(--red); border-radius:20px; padding:24px 20px 22px; box-shadow:0 0 0 1px rgba(234,42,51,0.25), 0 30px 70px -10px rgba(234,42,51,0.35); animation:offerPop .6s cubic-bezier(.34,1.56,.64,1) forwards;}
+.offer-card{position:relative; width:100%; max-width:360px; max-height:88vh; overflow-y:auto; background:linear-gradient(165deg, #1D1D22, #0A0A0C); border:1.5px solid var(--red); border-radius:20px; padding:24px 20px 22px; box-shadow:0 0 0 1px rgba(234,42,51,0.25), 0 30px 70px -10px rgba(234,42,51,0.35); animation:offerPop .6s cubic-bezier(.34,1.56,.64,1) forwards;}
 @keyframes offerPop{0%{opacity:0; transform:scale(.65) translateY(30px);} 60%{opacity:1; transform:scale(1.045) translateY(-4px);} 100%{transform:scale(1) translateY(0);}}
-.offer-close{position:absolute; top:12px; left:12px; width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:14px; z-index:2;}
+.offer-close{position:absolute; top:12px; left:12px; width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; color:#8C8B92; font-size:14px; z-index:2;}
 .offer-close:focus-visible{outline:2px solid var(--tech-blue);}
 
 .reveal{opacity:0; transform:translateY(10px); animation:fadeUp .55s ease forwards;}
 @keyframes fadeUp{to{opacity:1; transform:translateY(0);}}
 
 .offer-kicker{display:inline-flex; align-items:center; gap:6px; background:var(--red); color:#fff; font-size:11px; font-weight:800; padding:4px 12px; border-radius:20px; margin-bottom:16px; animation-delay:.05s; box-shadow:0 0 16px rgba(234,42,51,0.6);}
-.offer-loss{font-size:14px; color:var(--muted); text-decoration:line-through; margin-bottom:4px; animation-delay:.2s;}
-.offer-headline{font-family:var(--font-display); font-weight:900; font-size:25px; line-height:1.35; color:var(--white); margin-bottom:16px; animation-delay:.35s;}
+.offer-loss{font-size:14px; color:#8C8B92; text-decoration:line-through; margin-bottom:4px; animation-delay:.2s;}
+.offer-headline{font-family:var(--font-display); font-weight:900; font-size:25px; line-height:1.35; color:#F5F4F2; margin-bottom:16px; animation-delay:.35s;}
 .offer-headline .num{color:var(--red-glow); font-size:27px;}
-.offer-proof{border:1px solid var(--line-red); border-radius:14px; overflow:hidden; margin-bottom:8px; animation-delay:.5s; background:#0c0e0d;}
+.offer-proof{border:1px solid rgba(234,42,51,0.4); border-radius:14px; overflow:hidden; margin-bottom:8px; animation-delay:.5s; background:#0c0e0d;}
 .offer-proof img{width:100%; height:auto; display:block; image-rendering:-webkit-optimize-contrast; image-rendering:crisp-edges;}
-.offer-proof-cap{font-size:11px; color:var(--muted); text-align:center; padding:8px 6px; background:var(--surface-2); border-top:1px solid var(--line-red);}
-.offer-body{font-size:13.5px; line-height:1.85; color:var(--white); margin:16px 0; animation-delay:.65s;}
-.offer-body b{color:var(--gold-light); font-weight:700;}
-.offer-price{border:1px dashed var(--line-red); border-radius:14px; padding:14px; text-align:center; margin-bottom:16px; animation-delay:.8s;}
-.offer-price .small{font-size:12px; color:var(--muted); display:block; margin-bottom:4px;}
-.offer-price .big{font-family:var(--font-display); font-weight:900; font-size:22px; color:var(--gold-light);}
+.offer-proof-cap{font-size:11px; color:#8C8B92; text-align:center; padding:8px 6px; background:#1D1D22; border-top:1px solid rgba(234,42,51,0.4);}
+.offer-body{font-size:13.5px; line-height:1.85; color:#F5F4F2; margin:16px 0; animation-delay:.65s;}
+.offer-body b{color:#E6CC74; font-weight:700;}
+.offer-price{border:1px dashed rgba(234,42,51,0.4); border-radius:14px; padding:14px; text-align:center; margin-bottom:16px; animation-delay:.8s;}
+.offer-price .small{font-size:12px; color:#8C8B92; display:block; margin-bottom:4px;}
+.offer-price .big{font-family:var(--font-display); font-weight:900; font-size:22px; color:#E6CC74;}
 .offer-price .urgent{font-size:12px; color:var(--red-glow); font-weight:700; margin-top:6px; display:block;}
 .offer-cta{display:block; text-align:center; padding:15px; border-radius:13px; background:linear-gradient(180deg, var(--red-glow), var(--red)); color:#fff; font-weight:800; font-size:15.5px; box-shadow:0 16px 30px -10px rgba(234,42,51,0.6); animation-delay:.95s; animation:fadeUp .55s ease forwards, ctaPulse 1.8s ease-in-out 1.6s infinite;}
 @keyframes ctaPulse{0%,100%{box-shadow:0 16px 30px -10px rgba(234,42,51,0.6);} 50%{box-shadow:0 16px 38px -6px rgba(234,42,51,0.95);}}
-.offer-skip{display:block; text-align:center; margin-top:12px; font-size:12.5px; color:var(--muted); text-decoration:underline; text-underline-offset:3px; animation-delay:1.05s;}
+.offer-skip{display:block; text-align:center; margin-top:12px; font-size:12.5px; color:#8C8B92; text-decoration:underline; text-underline-offset:3px; animation-delay:1.05s;}
 </style>
 </head>
 <body>
@@ -394,7 +394,8 @@ function buildPhotoPrompt(occ, fields, look){
   const noText = 'مهم جدًا: لا تكتب أي حروف أو كلمات أو أرقام كتابية أو نص إطلاقًا بأي مكان بالتصميم، واترك آخر 25% من أسفل البطاقة استمرار بسيط هادئ لنفس الخلفية بدون أي زخرفة أو ظل يمتد إليه، فاضي تمامًا عشان يُكتب عليه نص بعد ذلك.';
   const preserve = 'حافظ تمامًا على ملامح وجه الشخص بالصورة الأصلية بدون أي تغيير أو تشويه، تصوير فوتوغرافي واقعي عالي الدقة بإضاءة استوديو طبيعية ناعمة.';
   if(occ.id === 'wedding'){
-    return `حوّل هذي الصورة الشخصية إلى دعوة زواج رجالية فاخرة بنسبة عمودية بنفس مستوى دعوات الزواج الاحترافية بالسعودية والخليج. الشخص بالصورة يرتدي ثوب أبيض رسمي وبشت فاخر على الكتف (إذا لم يكن يرتديه بالصورة الأصلية، أضفه عليه بشكل واقعي طبيعي)، يقف بثقة وأناقة بزاوية جانبية أنيقة يشغل أعلى 70% من البطاقة فقط. ${WEDDING_PHOTO_BG}. ${preserve} ${noText}`;
+    const preserveIdentity = 'استخدم الصورة المرفقة كمرجع أساسي وحصري لهوية الشخص، وحافظ بدقة 100% على: شكل الوجه، شكل وأسلوب اللحية، الابتسامة، تسريحة الشعر، درجة لون البشرة، نوع وحجم الجسم، ونسب الوجه الطبيعية، بدون أي تغيير في الهوية. الشخص النهائي يجب يكون نفس الشخص بالصورة الأصلية بالضبط.';
+    return `حوّل هذي الصورة الشخصية إلى دعوة زواج رجالية فاخرة بنسبة عمودية بنفس مستوى دعوات الزواج الاحترافية بالسعودية والخليج. ${preserveIdentity} غيّر فقط ملابسه إلى ثوب أبيض رسمي فاخر وبشت أسود فاخر بتطريز ذهبي غني. ضع الشخص بالجانب الأيمن من البطاقة فقط (يشغل تقريبًا 40% من العرض من اليمين)، يقف بثقة وأناقة. ${WEDDING_PHOTO_BG}. اترك الجانب الأيسر من البطاقة بالكامل (تقريبًا 60% من العرض) فاضي تمامًا وهادئ بدون أي زخرفة كثيفة أو ظل يمتد إليه من الشخص، عشان يُكتب عليه نص بعد ذلك. لا تكتب أي حروف أو كلمات أو نص إطلاقًا بأي مكان بالتصميم.`;
   }
   if(occ.id === 'birthday' && fields.age){
     const isChild = parseInt(fields.age) > 0 && parseInt(fields.age) <= 12;
@@ -424,10 +425,10 @@ async function generate(){
       const lines = [occ.title(state.fields), occ.line(state.fields), occ.sub(state.fields), ...extra].filter(Boolean);
       const textColor = getTextColor(occ, look);
       const fontFamily = occ.id === 'wedding' ? 'Amiri' : null;
+      const layout = occ.id === 'wedding' ? 'left-column' : 'bottom';
       let anchorRatio = 0.58;
       if(state.photo && occ.id === 'birthday' && state.fields.age) anchorRatio = 0.88;
-      else if(occ.id === 'wedding') anchorRatio = 0.84;
-      state.generatedImage = await compositeText(data.image, lines, textColor, anchorRatio, fontFamily);
+      state.generatedImage = await compositeText(data.image, lines, textColor, anchorRatio, fontFamily, layout);
     }
     state.generationError = null;
   } catch(err){
@@ -438,7 +439,7 @@ async function generate(){
     setStep(5);
   }
 }
-async function compositeText(imageSrc, lines, textColor, anchorRatio, fontFamily){
+async function compositeText(imageSrc, lines, textColor, anchorRatio, fontFamily, layout){
   const ff = fontFamily || 'Cairo';
   const ff2 = fontFamily || 'Tajawal';
   try{ await document.fonts.load(`700 60px ${ff}`); await document.fonts.load(`400 30px ${ff2}`); await document.fonts.ready; }catch(e){}
@@ -451,18 +452,29 @@ async function compositeText(imageSrc, lines, textColor, anchorRatio, fontFamily
   const r = parseInt(col.substr(0,2),16), g = parseInt(col.substr(2,2),16), b = parseInt(col.substr(4,2),16);
   const isLight = (r*299+g*587+b*114)/1000 > 150;
   const scrim = isLight ? '0,0,0' : '255,255,255';
-  const zoneTop = Math.max(0, H*((anchorRatio||0.58) - 0.32));
-  const grad = ctx.createLinearGradient(0, zoneTop, 0, H);
-  grad.addColorStop(0, `rgba(${scrim},0)`);
-  grad.addColorStop(0.35, `rgba(${scrim},0.55)`);
-  grad.addColorStop(1, `rgba(${scrim},0.85)`);
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, zoneTop, W, H - zoneTop);
+  let cx, maxWidth;
+  if(layout === 'left-column'){
+    const colW = W*0.58;
+    const grad = ctx.createLinearGradient(0, 0, colW*1.15, 0);
+    grad.addColorStop(0, `rgba(${scrim},0.8)`);
+    grad.addColorStop(0.75, `rgba(${scrim},0.5)`);
+    grad.addColorStop(1, `rgba(${scrim},0)`);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, colW*1.15, H);
+    cx = colW/2; maxWidth = colW*0.82;
+  } else {
+    const zoneTop = Math.max(0, H*((anchorRatio||0.58) - 0.32));
+    const grad = ctx.createLinearGradient(0, zoneTop, 0, H);
+    grad.addColorStop(0, `rgba(${scrim},0)`);
+    grad.addColorStop(0.35, `rgba(${scrim},0.55)`);
+    grad.addColorStop(1, `rgba(${scrim},0.85)`);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, zoneTop, W, H - zoneTop);
+    cx = W/2; maxWidth = W*0.78;
+  }
   ctx.direction = 'rtl'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.fillStyle = textColor || '#7A2E3A';
   ctx.shadowColor = isLight ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)'; ctx.shadowBlur = W*0.012;
-  const cx = W/2;
-  const maxWidth = W*0.78;
   function wrap(text, font){
     ctx.font = font;
     const words = text.split(' ');
@@ -474,14 +486,14 @@ async function compositeText(imageSrc, lines, textColor, anchorRatio, fontFamily
     if(cur) out.push(cur);
     return out;
   }
-  const titleFont = `700 ${Math.round(W*0.072)}px ${ff}, sans-serif`;
-  const lineFont = `400 ${Math.round(W*0.038)}px ${ff2}, sans-serif`;
-  const subFont = `400 ${Math.round(W*0.032)}px ${ff2}, sans-serif`;
+  const titleFont = `700 ${Math.round(W*(layout==='left-column'?0.058:0.072))}px ${ff}, sans-serif`;
+  const lineFont = `400 ${Math.round(W*(layout==='left-column'?0.030:0.038))}px ${ff2}, sans-serif`;
+  const subFont = `400 ${Math.round(W*(layout==='left-column'?0.026:0.032))}px ${ff2}, sans-serif`;
   const fonts = [titleFont, lineFont, subFont];
-  const blocks = lines.map((t,i)=>({lines:wrap(t, fonts[i]||subFont), font:fonts[i]||subFont, gap:i===0?Math.round(W*0.09):Math.round(W*0.05)}));
+  const blocks = lines.map((t,i)=>({lines:wrap(t, fonts[i]||subFont), font:fonts[i]||subFont, gap:i===0?Math.round(W*0.07):Math.round(W*0.045)}));
   let totalH = 0;
   blocks.forEach(b=>{ totalH += b.lines.length * (parseInt(b.font.match(/(\d+)px/)[1])*1.35) + b.gap; });
-  let y = H*(anchorRatio||0.58) - totalH/2;
+  let y = H*(layout==='left-column' ? 0.5 : (anchorRatio||0.58)) - totalH/2;
   blocks.forEach(b=>{
     ctx.font = b.font;
     const lh = parseInt(b.font.match(/(\d+)px/)[1])*1.35;
